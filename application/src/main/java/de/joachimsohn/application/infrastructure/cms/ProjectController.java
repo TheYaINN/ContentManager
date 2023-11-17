@@ -1,6 +1,6 @@
-package de.joachimsohn.application.cms;
+package de.joachimsohn.application.infrastructure.cms;
 
-import de.joachimsohn.application.cms.adapter.ProjectWebAdapter;
+import de.joachimsohn.application.infrastructure.cms.adapter.ProjectWebAdapter;
 import model.ProjectDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

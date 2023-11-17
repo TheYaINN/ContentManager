@@ -1,4 +1,4 @@
-package de.joachimsohn.application.cms.adapter;
+package de.joachimsohn.application.infrastructure.cms.adapter;
 
 import de.joachimsohn.application.domain.ProjectService;
 import lombok.RequiredArgsConstructor;
