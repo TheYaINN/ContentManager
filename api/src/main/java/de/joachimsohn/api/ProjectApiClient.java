@@ -16,7 +16,7 @@ public class ProjectApiClient {
     private final Logger LOGGER = LoggerFactory.getLogger(ProjectApiClient.class);
 
     public ProjectDto get() {
-        ProjectDto user = rest.getForObject(url, ProjectDto.class, "");
+        ProjectDto user = rest.getForObject(url, ProjectDto.class);
         LOGGER.debug("Request: {}", user);
         return user;
     }

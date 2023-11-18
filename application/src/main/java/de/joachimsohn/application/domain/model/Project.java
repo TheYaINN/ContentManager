@@ -1,11 +1,11 @@
 package de.joachimsohn.application.domain.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.SortedSet;
+
+import static jakarta.persistence.CascadeType.MERGE;
+import static jakarta.persistence.CascadeType.PERSIST;
 
 @Entity
 @Table
@@ -14,7 +14,7 @@ public final class Project {
     @Id
     private String name;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, cascade = {MERGE, PERSIST}, targetEntity = Environment.class)
     private SortedSet<Environment> environments;
 
 

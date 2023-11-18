@@ -31,6 +31,8 @@ public class CmsKey {
     @OneToOne
     private CmsKey child;
 
+    private int children;
+
     @Nullable
     @OneToOne
     private CmsKey parent;
@@ -44,12 +46,26 @@ public class CmsKey {
     public void setChild(final CmsKey child) throws NotAssignableError {
         if (parent == null) {
             this.child = child;
+            propagateUp();
         } else {
             if (parent.ValidFrom != null && parent.ValidFrom.isBefore(child.ValidFrom)) {
                 this.child = child;
+                propagateUp();
             } else {
                 throw new NotAssignableError();
             }
         }
+    }
+
+    private void propagateUp() {
+        var current = this;
+        while (current.parent != null) {
+            current.children++;
+            current = parent;
+        }
+    }
+
+    public static class NotAssignableError extends Throwable {
+
     }
 }
