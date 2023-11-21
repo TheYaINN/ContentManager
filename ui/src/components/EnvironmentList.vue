@@ -1,33 +1,38 @@
 <script lang="ts" setup>
 
-import { useProjectStore } from "../stores/ProjectStore";
+import { Environment, useProjectStore } from "../stores/ProjectStore";
 import CmsKeysTable from "./CmsKeysTable.vue";
 import { ref, watch } from "vue";
+import EditEnvironmentOverlay from "./EditEnvironmentOverlay.vue";
 
 interface Props {
-  projectName: string;
+  projectId: string;
 }
 
 const props = defineProps<Props>();
 
 let cmsitems = ref([]);
 const show = ref(false);
+let overlay = ref(false);
 
 let items = ref([]);
-watch(() => props.projectName, () => {
-  items.value = useProjectStore().getEnvironments(props.projectName)
+watch(() => props.projectId, () => {
+  items.value = useProjectStore().getEnvironments(props.projectId)
 })
 
 
 function open(environmentName: string) {
-  const environment = useProjectStore().getEnvironments(props.projectName).find(e => e.name == environmentName)
+  const environment = useProjectStore().getEnvironments(props.projectId).find(e => e.name == environmentName)
   cmsitems.value = environment.keys;
   show.value = true
+}
+
+function remove(environment: Environment) {
+  useProjectStore().deleteEnvironment(environment);
 }
 </script>
 
 <template>
-  {{ props.projectName }}
   <p>ENVS</p>
   <v-list :lines="'one'">
     <v-list-item
@@ -35,7 +40,25 @@ function open(environmentName: string) {
         :key="environment.name"
         :title="`${environment.name}`"
         @click="open(environment.name)"
-    />
+    >
+      <div style="display: flex; margin-left: auto">
+        <v-list-item-action>
+          <v-btn
+              color="error"
+              @click="overlay = !overlay"
+          >EDIT
+          </v-btn>
+          <EditEnvironmentOverlay v-if="overlay" :environment="environment"/>
+        </v-list-item-action>
+        <v-list-item-action>
+          <v-btn
+              color="error"
+              @click="remove(environment)"
+          >DELETE
+          </v-btn>
+        </v-list-item-action>
+      </div>
+    </v-list-item>
   </v-list>
   <CmsKeysTable v-if="show" :items="cmsitems"/>
 </template>

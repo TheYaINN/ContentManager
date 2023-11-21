@@ -10,13 +10,14 @@ export interface CmsKey {
     parent?: CmsKey;
 }
 
-interface Environment {
+export interface Environment {
     name: string;
     order: number;
     keys?: Array<CmsKey>
 }
 
-interface Project {
+export interface Project {
+    id: string;
     name: string;
     environments?: Array<Environment>
 }
@@ -34,8 +35,8 @@ export const useProjectStore = defineStore("ProjectStore", {
     },
     getters: {
         getEnvironments: (state) => {
-            return (projectName: string) => state.projects
-                .find((project) => project.name === projectName).environments
+            return (projectId: string) => state.projects
+                .find((project) => project.id === projectId).environments
                 .sort((o1, o2) => (o1.order < o2.order ? -1 : 1));
         },
     },
@@ -46,6 +47,15 @@ export const useProjectStore = defineStore("ProjectStore", {
                 console.log(result.data)
                 this.projects = result.data;
             }
+        },
+        async save(project: Project) {
+            await axios.put<any, any>("http://localhost:8080/projects/", project);
+        },
+        async deleteProject(project: Project) {
+            await axios.delete<any, any>(`http://localhost:8080/projects/${ project.id }`);
+        },
+        async deleteEnvironment(environment: Environment) {
+            await axios.delete<any, any>(`http://localhost:8080/environments/${ environment.name }`);
         }
     }
 })

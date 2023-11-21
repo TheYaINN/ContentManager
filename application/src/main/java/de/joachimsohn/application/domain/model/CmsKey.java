@@ -1,16 +1,15 @@
 package de.joachimsohn.application.domain.model;
 
 import jakarta.annotation.Nullable;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@Builder
 @Entity
 @Table
 @AllArgsConstructor
@@ -19,18 +18,22 @@ public class CmsKey {
 
     @Id
     @NotNull
+    @Column(name = "cmskeyId")
     private String key;
 
     @NotNull
+    @Column(name = "cmskeyValue")
     private String value;
 
     @Nullable
+    @Column
     private LocalDateTime ValidFrom;
 
     @Nullable
     @OneToOne
     private CmsKey child;
 
+    @Column
     private int children;
 
     @Nullable
