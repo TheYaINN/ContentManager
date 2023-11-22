@@ -9,6 +9,7 @@ ext {
 
 dependencies {
     //    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-rest'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -32,6 +33,14 @@ dependencyManagement {
     imports {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
+}
+
+tasks.register('Copy Vue Resource', Copy) {
+    println "Copying resources"
+    from "${project.parent.projectDir}/ui/dist"
+    include "**/assets/"
+    include "**/index.html"
+    into "src/main/resources/public"
 }
 
 tasks.register('prepareKotlinBuildScriptModel') {
