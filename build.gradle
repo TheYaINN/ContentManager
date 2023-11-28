@@ -10,10 +10,6 @@ allprojects {
     group 'de.joachimsohn'
     version '1.0-SNAPSHOT'
 
-    tasks.register("hello") {
-        it.doLast { println "I'm $project.name" }
-    }
-
     repositories {
         mavenCentral()
     }
@@ -34,6 +30,12 @@ allprojects {
         testImplementation platform('org.junit:junit-bom:5.9.1')
         testImplementation 'org.junit.jupiter:junit-jupiter'
     }
+}
+
+task copyFrontend(type: Copy) {
+    println "Copying Vue frontend"
+    from "ui/dist"
+    into "src/main/resources/public"
 }
 
 test {
