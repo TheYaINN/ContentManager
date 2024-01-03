@@ -39,13 +39,19 @@ publishing {
             groupId = group
             artifactId = project.name
             version = project.version
-            
+
             from components.java
         }
     }
     repositories {
         mavenLocal()
     }
+}
+
+task copyFrontend(type: Copy) {
+    println "Copying Vue frontend"
+    from "ui/dist"
+    into "src/main/resources/public"
 }
 
 test {
