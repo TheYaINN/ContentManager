@@ -36,6 +36,7 @@ dependencyManagement {
 }
 
 tasks.register('Copy Vue Resource', Copy) {
+    dependsOn('npmInstall')
     println "Copying resources"
     from "${project.parent.projectDir}/ui/dist"
     include "**/assets/"

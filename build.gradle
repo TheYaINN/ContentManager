@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'maven-publish'
 }
 
 subprojects {
@@ -9,10 +10,6 @@ subprojects {
 allprojects {
     group 'de.joachimsohn'
     version '1.0-SNAPSHOT'
-
-    tasks.register("hello") {
-        it.doLast { println "I'm $project.name" }
-    }
 
     repositories {
         mavenCentral()
@@ -33,6 +30,21 @@ allprojects {
         annotationProcessor 'org.projectlombok:lombok:1.18.30'
         testImplementation platform('org.junit:junit-bom:5.9.1')
         testImplementation 'org.junit.jupiter:junit-jupiter'
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = group
+            artifactId = project.name
+            version = project.version
+            
+            from components.java
+        }
+    }
+    repositories {
+        mavenLocal()
     }
 }
 
