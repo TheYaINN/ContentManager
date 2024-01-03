@@ -33,9 +33,6 @@ public class CmsKey {
     @OneToOne
     private CmsKey child;
 
-    @Column
-    private int children;
-
     @Nullable
     @OneToOne
     private CmsKey parent;
@@ -43,30 +40,21 @@ public class CmsKey {
     /**
      * the child always has to be in the future to be a valid recursion, that will only be replaced
      *
-     * @param child
-     * @throws NotAssignableError
+     * @param child the child to be added to this CmsKey
+     * @throws NotAssignableError is thrown when the parent has no validity period or when the parents validity period is in the future of the child, which is not allowed.
      */
-    public void setChild(final CmsKey child) throws NotAssignableError {
+    public void setChild(final @NotNull CmsKey child) throws NotAssignableError {
         if (parent == null) {
             this.child = child;
-            propagateUp();
         } else {
             if (parent.ValidFrom != null && parent.ValidFrom.isBefore(child.ValidFrom)) {
                 this.child = child;
-                propagateUp();
             } else {
                 throw new NotAssignableError();
             }
         }
     }
 
-    private void propagateUp() {
-        var current = this;
-        while (current.parent != null) {
-            current.children++;
-            current = parent;
-        }
-    }
 
     public static class NotAssignableError extends Throwable {
 

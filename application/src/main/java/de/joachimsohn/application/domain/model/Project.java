@@ -21,7 +21,8 @@ import static jakarta.persistence.CascadeType.PERSIST;
 public final class Project {
 
     @Id
-    private UUID id;
+    @Builder.Default
+    private UUID id = UUID.randomUUID();
 
     @Column
     private String name;

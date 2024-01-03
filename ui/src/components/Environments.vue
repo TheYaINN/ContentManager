@@ -41,7 +41,7 @@ function remove(environment: Environment) {
         :title="`${environment.name}`"
         @click="open(environment.name)"
     >
-      <div style="display: flex; margin-left: auto">
+      <div style="display: flex; margin-left: auto; gap: 0.5rem">
         <v-list-item-action>
           <v-btn
               color="error"

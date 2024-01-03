@@ -44,7 +44,7 @@ public final class ProjectController {
         return ProjectDto.builder()
                 .id(UUID.randomUUID())
                 .name("test").environments(new TreeSet<>() {{
-                    add(EnvironmentDto.builder().name("dev").order(0).keys(List.of(CmsKeyDto.builder().key("just keying").value("my Value").children(110).build())).build());
+                    add(EnvironmentDto.builder().name("dev").order(0).keys(List.of(CmsKeyDto.builder().key("just keying").value("my Value").build())).build());
                     add(EnvironmentDto.builder().name("qa").order(1).keys(List.of()).build());
                     add(EnvironmentDto.builder().name("prod").order(3).keys(List.of()).build());
                 }}).build();

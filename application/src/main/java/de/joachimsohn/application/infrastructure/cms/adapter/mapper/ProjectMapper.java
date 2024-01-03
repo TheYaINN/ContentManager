@@ -12,7 +12,6 @@ public final class ProjectMapper {
 
     public @NotNull Project toDomain(final @NotNull ProjectDto source) {
         return Project.builder()
-                .id(source.id())
                 .name(source.name())
                 .environments(new TreeSet<>())
                 .build();

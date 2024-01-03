@@ -15,8 +15,12 @@ const props = defineProps<Props>();
   <v-data-table :items="props.items">
     <template v-slot:item="row">
       <tr>
-        <td>{{ row.key }}</td>
-        <td>{{ row.value }}</td>
+        <td>{{ row.item.key }}</td>
+        <td>{{ row.item.value }}</td>
+        <td>{{ row.item.ValidFrom }}</td>
+        <td>{{ row.item.child }}</td>
+        <td>{{ row.item.children }}</td>
+        <td>{{ row.item.parent }}</td>
         <v-btn class="mx-2" icon="mdi-delete" variant="plain" @click="console.log('CLICK')">
         </v-btn>
       </tr>

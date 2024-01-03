@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 
 import { Project, useProjectStore } from "../stores/ProjectStore";
-import EnvironmentList from "./EnvironmentList.vue";
 import { ref } from "vue";
 import EditProjectOverlay from "./EditProjectOverlay.vue";
+import Environments from "./Environments.vue";
 
 
 let projectId = ref("");
@@ -23,6 +23,7 @@ function remove(project: Project) {
 <template>
   <p>PROJECTS</p>
   <button @click="useProjectStore().load()">LOAD</button>
+  <EditProjectOverlay v-if="add" :project="{}"/>
   <v-list :lines="'one'">
     <v-list-item
         v-for="project in useProjectStore().projects"
@@ -34,10 +35,10 @@ function remove(project: Project) {
         <v-list-subheader class="ellipsize">
           {{ project.environments.length > 0 ? project.environments.map(e => e.name).join(", ") : "No Environments" }}
         </v-list-subheader>
-        <div style="display: flex; margin-left: auto">
+        <div style="display: flex; margin-left: auto; gap: 0.5rem">
           <v-list-item-action>
             <v-btn
-                color="error"
+                color="blue"
                 @click="overlay = !overlay"
             >EDIT
             </v-btn>
@@ -55,7 +56,7 @@ function remove(project: Project) {
     </v-list-item>
   </v-list>
   {{ show }}
-  <EnvironmentList v-if="show" :project-id="projectId"/>
+  <Environments v-if="show" :project-id="projectId"/>
 </template>
 
 <style scoped>

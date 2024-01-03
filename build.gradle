@@ -48,12 +48,6 @@ publishing {
     }
 }
 
-task copyFrontend(type: Copy) {
-    println "Copying Vue frontend"
-    from "ui/dist"
-    into "src/main/resources/public"
-}
-
 test {
     useJUnitPlatform()
 }
